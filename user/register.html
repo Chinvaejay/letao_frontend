@@ -69,6 +69,12 @@
                 url:'/a/user/register',
                 success(info){
                     console.log(info)
+                    if(info.success){
+                        location.href='./login.html'
+                    }
+                    else if(info.error){
+                        alert(`${info.error}\n${info.message}`)
+                    }
                 }
             })
             return false
