@@ -22,9 +22,21 @@
             <span class="title">收货地址管理</span>
         </header>
         <div class="cz_container">
-            <form class="addressEdit">
+            <form class="addressAdd">
                 <div class="form_box">
-
+                    <div class="mui-input-row">
+                        <input name="recipients" type="text" placeholder="收货人">
+                    </div>
+                    <div class="mui-input-row">
+                        <input name="postcode" type="text" placeholder="邮编">
+                    </div>
+                    <div class="mui-input-row">
+                        <input name="address" type="text" placeholder="省市区地址">
+                    </div>
+                    <div class="mui-input-row">
+                        <textarea name="addressDetail" id="textarea" rows="5" placeholder="详细地址"></textarea>
+                    </div>
+                    <button class="mui-btn mui-btn-primary btn_login">确认</button>
                 </div>
             </form>
         </div>
@@ -38,48 +50,17 @@
     <script src="../res/mui/js/mui.min.js"></script>
     <script src="../js/jquery.js"></script>
     <script src="../js/template-web.js"></script>
-    <script id="tpl" type="text/html">
-        <input type="hidden" name="id" value="{{id}}">
-        <div class="mui-input-row">
-                <input name="recipients" type="text" placeholder="收货人" value="{{recipients}}">
-            </div>
-            <div class="mui-input-row">
-                <input name="postcode" type="text" placeholder="邮编" value="{{postCode}}">
-            </div>
-            <div class="mui-input-row">
-                <input name="address" type="text" placeholder="省市区" value="{{address}}">
-            </div>
-            <div class="mui-input-row">
-                <textarea name="addressDetail" id="textarea" rows="5" placeholder="详细">{{addressDetail}}</textarea>
-            </div>
-            <button class="mui-btn mui-btn-primary btn_login">确认</button>
-    </script>
+   
     <script>
-        let search = location.search
-        let exp = /id=(\d+)/
-        let result = exp.exec(search)
-        let addressid = result[1]
-        $.ajax({
-            url: '/a/address/queryAddress',
-            success(info) {
-                console.log(info)
-                if (info.error) return location.href = '/user/login.html?url=' + location.href
-                let list = info.filter(v => v.id == addressid )
-                console.log(list)
-                let html=template('tpl', list[0])
-                console.log(html)
-                $('.form_box').html(html)
-            }
-        })
-        $('.addressEdit').on('submit',function(){
+         $('.addressAdd').on('submit',function(){
             let data=$(this).serialize()
             $.ajax({
-                url:'/a/address/updateAddress',
+                url:'/a/address/addAddress',
                 type:'post',
                 data,
                 success(info){
                     if(info.error) return location.href='/user/login.html?url='+location.href
-                    alert('修改成功')
+                    alert('添加成功')
                     location.href='/user/address.html'
                 }
             })
