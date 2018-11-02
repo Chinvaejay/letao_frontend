@@ -60,7 +60,12 @@
 <script src="../res/mui/js/mui.min.js"></script>
 <script src="../js/jquery.js"></script>
 <script>
-    
+    $.ajax({
+        url:'/a/address/queryAddress',
+        success(info){
+            console.log(info)
+        }
+    })
 </script>
 </body>
 </html>
