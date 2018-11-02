@@ -13,6 +13,12 @@
     <link rel="stylesheet" href="../res/fontAwesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/user.css" />
+    <style>
+        .box {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -31,7 +37,19 @@
                         <input name="postcode" type="text" placeholder="邮编">
                     </div>
                     <div class="mui-input-row">
-                        <input name="address" type="text" placeholder="省市区地址">
+                        <div class="box">
+                            <select id="a" data-id="">
+                                <option>请选择省份</option>
+                            </select>
+                            <select id="b" data-id="">
+                                <option>请选择城市</option>
+                            </select>
+                            <select id="c" data-id="">
+                                <option>请选择区/县</option>
+                            </select>
+                        </div>
+
+                        <input name="address" type="hidden" placeholder="省市区地址">
                     </div>
                     <div class="mui-input-row">
                         <textarea name="addressDetail" id="textarea" rows="5" placeholder="详细地址"></textarea>
@@ -50,10 +68,14 @@
     <script src="../res/mui/js/mui.min.js"></script>
     <script src="../js/jquery.js"></script>
     <script src="../js/template-web.js"></script>
+    <script src="../js/jquery.region.js"></script>
    
     <script>
          $('.addressAdd').on('submit',function(){
-            let data=$(this).serialize()
+             let addr=$('.box').find('select>option:selected').text()
+             $('input[name=address]').val(addr)
+             let data=$(this).serialize()
+             
             $.ajax({
                 url:'/a/address/addAddress',
                 type:'post',
@@ -66,7 +88,10 @@
             })
             return false
         })
-    </script>
+        $('.box').region({
+            url:'../js/region.json'
+        })
+        </script>
 </body>
 
 </html>
